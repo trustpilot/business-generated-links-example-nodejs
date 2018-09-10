@@ -14,7 +14,7 @@ let order = {
     "skus":["sku1","sku2","sku3"],
     "tags":["tag1","tag2","tag3"]
 };
-let jsonSeralizedOrder = JSON.stringify(order);
+let jsonSerializedOrder = JSON.stringify(order);
 
 // When you get the keys from Trustpilot, they are base64 encoded, so first we need to decode them
 let encryptionKey = Buffer.from(encryptionKeyBase64, 'base64');
@@ -25,7 +25,7 @@ let iv = crypto.randomBytes(16);
 
 // Encrypt our order
 let cipher = crypto.createCipheriv('aes-256-cbc', encryptionKey, iv);
-let cipherText = Buffer.concat([cipher.update(jsonSeralizedOrder, 'utf8'), cipher.final()]);
+let cipherText = Buffer.concat([cipher.update(jsonSerializedOrder, 'utf8'), cipher.final()]);
 
 // Compute the HMAC
 let hmac = crypto.createHmac('sha256', authenticationKey).update(Buffer.concat([iv, cipherText])).digest();
